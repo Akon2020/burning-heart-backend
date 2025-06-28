@@ -1,6 +1,6 @@
 import { Utilisateur } from "../models/index.model.js";
 import { Op } from "sequelize";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { DEFAULT_PASSWD, EMAIL, FRONT_URL } from "../config/env.js";
 import { getUserWithoutPassword, strongPasswd } from "../utils/user.utils.js";
 import { valideEmail } from "../middlewares/email.middleware.js";
@@ -13,7 +13,7 @@ export const getAllUtilisateurs = async (req, res, next) => {
     const usersWithoutPassword = users.map(getUserWithoutPassword);
     return res.status(200).json({
       nombre: usersWithoutPassword.length,
-      usersWithoutPassword,
+      usersInfo: usersWithoutPassword,
     });
   } catch (error) {
     res.status(500).json({ message: "Erreur serveur" });
