@@ -143,9 +143,86 @@ export const confirmationReceptionEmailTemplate = (nom, url) => {
   
           <tr>
             <td align="center" style="color: #999999; font-size: 12px; padding-top: 20px;">
-              &copy; ${currentYear} – Tous droits réservés
+              &copy; ${currentYear} BurningHeart – Tous droits réservés
             </td>
           </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  `;
+};
+
+export const contactReplyEmailTemplate = (nom, sujet, contenuHtml) => {
+  return `
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f4f4f4; padding: 40px 1rem;">
+    <tr>
+      <td align="center">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; background-color: #ffffff; padding: 24px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.06); font-family: Arial, sans-serif;">
+          
+          <tr>
+            <td align="center" style="padding-bottom: 20px;">
+              <img src="https://burningheart.netlify.app/img/NavLogo.png" alt="Logo" style="max-width: 100%; width: auto; height: 5rem;">
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center" style="color: #a42223; font-size: 22px; font-weight: bold; padding-bottom: 16px;">
+              ${sujet}
+            </td>
+          </tr>
+
+          <tr>
+            <td style="color: #333333; font-size: 16px; padding-bottom: 16px;">
+              Bonjour ${nom},
+            </td>
+          </tr>
+
+          <tr>
+            <td style="color: #555555; font-size: 15px; line-height: 1.6; padding-bottom: 24px;">
+              ${contenuHtml}
+            </td>
+          </tr>
+
+          <tr>
+            <td style="color: #555555; font-size: 15px; padding-bottom: 24px;">
+              Si vous avez d'autres questions ou préoccupations, n'hésitez pas à nous écrire à tout moment.
+            </td>
+          </tr>
+
+          <tr>
+            <td style="color: #555555; font-size: 15px; padding-bottom: 16px;">
+              Cordialement,<br>
+              L'équipe BurningHeart
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0;" />
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center" style="padding: 10px 0;">
+              <a href="https://facebook.com/burningheart87" style="margin: 0 8px;">
+                <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" style="vertical-align: middle;">
+              </a>
+              <a href="https://instagram.com/burningheart87" style="margin: 0 8px;">
+                <img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="Instagram" style="vertical-align: middle;">
+              </a>
+              <a href="https://youtube.com/@burningheart-bhis" style="margin: 0 8px;">
+                <img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png" alt="YouTube" style="vertical-align: middle;">
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center" style="color: #999999; font-size: 12px; padding-top: 20px;">
+              &copy; ${currentYear} BurningHeart – Tous droits réservés
+            </td>
+          </tr>
+
         </table>
       </td>
     </tr>

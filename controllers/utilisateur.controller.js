@@ -6,6 +6,7 @@ import { getUserWithoutPassword, strongPasswd } from "../utils/user.utils.js";
 import { valideEmail } from "../middlewares/email.middleware.js";
 import { newUserEmailTemplate } from "../utils/email.template.js";
 import transporter from "../config/nodemailer.js";
+import { deleteFile } from "../utils/deletefile.js";
 
 export const getAllUtilisateurs = async (req, res, next) => {
   try {
@@ -95,19 +96,28 @@ export const createUtilisateur = async (req, res, next) => {
       dateInscription: new Date(),
     });
 
-    await transporter.sendMail(mailOptions);
+    let mailEnvoye = true;
+    try{
+      const mailOptions = {
+        from: EMAIL,
+        to: email,
+        subject: "Bienvenue dans BurningHeart",
+        html: newUserEmailTemplate(nomComplet, email, DEFAULT_PASSWD, FRONT_URL),
+      };
+      await transporter.sendMail(mailOptions);
+    } catch (mailError) {
+      console.error("Erreur lors de l'envoi du mail :", mailError.message);
+      mailEnvoye = false;
+    }
 
-    const mailOptions = {
-      from: EMAIL,
-      to: email,
-      subject: "Bienvenue dans BurningHeart",
-      html: newUserEmailTemplate(nomComplet, email, DEFAULT_PASSWD, FRONT_URL),
-    };
 
     const userWithoutPassword = getUserWithoutPassword(newUser);
 
     return res.status(201).json({
       message: `L'utilisateur ${nomComplet} a été créé avec succès`,
+      emailStatus: mailEnvoye
+        ? "E-mail de bienvenue envoyé"
+        : "L'utilisateur a été enregistré, mais le mail de bienvenue n'a pas pu être envoyé",
       data: userWithoutPassword,
     });
   } catch (error) {
@@ -119,32 +129,36 @@ export const createUtilisateur = async (req, res, next) => {
 export const updateUtilisateur = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { nomComplet, email, role } = req.body;
-    const avatar = req.file ? req.file.path : undefined;
-
-    const utilisateur = await Utilisateur.findByPk(id);
-
-    if (!utilisateur) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
-    }
-
-    const champsAMettreAJour = {};
-    if (nomComplet !== undefined) champsAMettreAJour.nomComplet = nomComplet;
-    if (email !== undefined) champsAMettreAJour.email = email;
-    if (role !== undefined) champsAMettreAJour.role = role;
-    if (avatar !== undefined) champsAMettreAJour.avatar = avatar;
-
-    if (Object.keys(champsAMettreAJour).length === 0) {
-      return res.status(400).json({ message: "Aucune donnée à mettre à jour" });
-    }
-
-    await utilisateur.update(champsAMettreAJour);
 
     const user = await Utilisateur.findByPk(id);
 
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    const champsModifiables = ["nomComplet", "email", "role"];
+    const donneesAMettreAJour = {};
+
+    champsModifiables.forEach((champ) => {
+      if (req.body[champ] !== undefined) {
+        donneesAMettreAJour[champ] = req.body[champ];
+      }
+    });
+
+    if (req.file) {
+      if (user.avatar) {
+        await deleteFile(user.avatar);
+      }
+      donneesAMettreAJour.avatar = req.file.path;
+    }
+
+    const utilisateurModifie = await user.update(donneesAMettreAJour);
+
+    const safeUser = getUserWithoutPassword(utilisateurModifie);
+
     return res.status(200).json({
-      message: `L'utilisateur ${utilisateur.nomComplet} a été mis à jour avec succès`,
-      data: getUserWithoutPassword(user),
+      message: `Les données de l'utilisateur ${user.nomComplet} ont été modifiées avec succès`,
+      data: safeUser,
     });
   } catch (error) {
     res.status(500).json({ message: "Erreur serveur" });
@@ -219,6 +233,10 @@ export const deleteUtilisateur = async (req, res, next) => {
       return res
         .status(404)
         .json({ message: "Cet utilisateur n'exite pas dans notre système" });
+    }
+
+    if(userExist){
+      await deleteFile(userExist.avatar);
     }
 
     await userExist.destroy();

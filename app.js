@@ -8,8 +8,9 @@ import db from "./database/db.js";
 import { syncModels } from "./models/index.model.js";
 import errorMiddleware, { errorLogs } from "./middlewares/error.middleware.js";
 import { setupSwagger } from "./swagger.js";
-import authRouter from './routes/auth.route.js';
-import userRouter from './routes/utilisateur.route.js';
+import authRouter from "./routes/auth.route.js";
+import userRouter from "./routes/utilisateur.route.js";
+import contactRouter from "./routes/contact.route.js";
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://127.0.0.1:3000",
-      "http://127.0.0.1:54612",
+      "http://127.0.0.1:58248",
       "https://burningheartihs.com",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
@@ -42,6 +43,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/contacts", contactRouter);
 
 app.get("/error", errorLogs);
 app.use(errorMiddleware);
@@ -53,9 +55,7 @@ app.listen(PORT, async (err) => {
     try {
       await syncModels();
       console.log(`Le serveur est lancé au http://localhost:${PORT}/`);
-      console.log(
-        `Documentation Swagger sur ${HOST_URL}/api-docs/`
-      );
+      console.log(`Documentation Swagger sur ${HOST_URL}/api-docs/`);
     } catch (error) {
       console.error("Erreur lors de la synchronisation des modèles:", error);
     }

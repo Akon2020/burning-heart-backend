@@ -32,7 +32,7 @@ userRouter.get("/", getAllUtilisateurs);
  * /api/users/{id}:
  *   get:
  *     summary: Récupère un utilisateur par son ID
- *     tags: [Users]
+ *     tags: [Utilisateurs]
  *     parameters:
  *       - in: path
  *         name: id
@@ -53,7 +53,7 @@ userRouter.get("/:id", getSingleUtilisateur);
  * /api/users/email/{email}:
  *   get:
  *     summary: Récupère un utilisateur par email
- *     tags: [Users]
+ *     tags: [Utilisateurs]
  *     parameters:
  *       - in: path
  *         name: email
@@ -76,7 +76,7 @@ userRouter.get("/email/:email", getUtilisateurByEmail);
  * /api/users/add:
  *   post:
  *     summary: Crée un nouvel utilisateur
- *     tags: [Users]
+ *     tags: [Utilisateurs]
  *     requestBody:
  *       required: true
  *       content:
@@ -117,7 +117,7 @@ userRouter.post(
  * /api/users/update/{id}:
  *   patch:
  *     summary: Met à jour un utilisateur
- *     tags: [Users]
+ *     tags: [Utilisateurs]
  *     parameters:
  *       - in: path
  *         name: id
@@ -161,7 +161,7 @@ userRouter.patch(
  * /api/users/update/{id}/password:
  *   patch:
  *     summary: Met à jour le mot de passe d'un utilisateur
- *     tags: [Users]
+ *     tags: [Utilisateurs]
  *     parameters:
  *       - in: path
  *         name: id
@@ -199,7 +199,7 @@ userRouter.patch(
  * /api/users/delete/{id}:
  *   delete:
  *     summary: Supprime un utilisateur
- *     tags: [Users]
+ *     tags: [Utilisateurs]
  *     parameters:
  *       - in: path
  *         name: id
