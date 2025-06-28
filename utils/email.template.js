@@ -11,7 +11,7 @@ export const welcomeEmailTemplate = (nom, email, url) => {
     <p style="color: #555555">Vous pouvez contacter l'administrateur à l'adresse suivante</p>
     <a href="mailto:burningheartihs@gmail.com" style="background-color: #a42223; color: #fff; padding: 10px; border-radius: 5px; text-decoration: none">burningheartihs@gmail.com</a>
     <p style="color: #555555">A très bientôt 😇,</p>
-    <p style="color: #555555">L'équipe de <a href="${url}" style="color: #a42223; text-decoration: none">Evoludia</a></p>
+    <p style="color: #555555">L'équipe de <a href="${url}" style="color: #a42223; text-decoration: none">BurningHeart</a></p>
     <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0" />
     <p style="color: #999999">Ce message a été envoyé automatiquement suite à la création de votre compte. Merci de ne pas y répondre.</p>
     <p style="color: #999999; text-align: center;">&copy; ${currentYear} BurningHeart – Tous droits réservés</p>

@@ -101,6 +101,10 @@ export const login = async (req, res, next) => {
         requiresPasswordChange: true,
       });
     }
+
+    user.derniereConnexion = new Date();
+    await user.save();
+    
     const loginToken = generateToken(user);
     res.cookie("token", loginToken, { httpOnly: true, secure: true });
 
