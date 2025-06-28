@@ -1,5 +1,25 @@
 const currentYear = new Date().getFullYear();
 
+export const welcomeEmailTemplate = (nom, email, url) => {
+  return `
+<div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+  <div style=" max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <h2 style="color: #333333">Bienvenue ${nom} 👋!</h2>
+    <p style="color: #555555">Votre compte a été créé avec succès pour l'adresse email</p> <strong style="text-align: center; text-decoration: none; color: #a42223">${email}</strong>
+    <p style="color: #555555">Vous disposez maintenant d'un compte sur notre plateforme, cependant vous n'avez pas encore accès au système de gestion.</p>
+    <p style="color: #555555">Pour obtenir les accès nécessaires, veuillez contacter l'administrateur du système qui vous attribuera les permissions appropriées.</p>
+    <p style="color: #555555">Vous pouvez contacter l'administrateur à l'adresse suivante</p>
+    <a href="mailto:burningheartihs@gmail.com" style="background-color: #a42223; color: #fff; padding: 10px; border-radius: 5px; text-decoration: none">burningheartihs@gmail.com</a>
+    <p style="color: #555555">A très bientôt 😇,</p>
+    <p style="color: #555555">L'équipe de <a href="${url}" style="color: #a42223; text-decoration: none">Evoludia</a></p>
+    <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0" />
+    <p style="color: #999999">Ce message a été envoyé automatiquement suite à la création de votre compte. Merci de ne pas y répondre.</p>
+    <p style="color: #999999; text-align: center;">&copy; ${currentYear} Evoludia – Tous droits réservés</p>
+    </div>
+</div>
+`;
+};
+
 export const newUserEmailTemplate = (nom, email, defaultPassword, url) => {
   return `<div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
   <div style=" max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">

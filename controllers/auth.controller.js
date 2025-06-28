@@ -1,10 +1,83 @@
 import { Utilisateur } from "../models/index.model.js";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { DEFAULT_PASSWD, EMAIL, HOST_URL, JWT_SECRET } from "../config/env.js";
-import { generateToken, getUserWithoutPassword } from "../utils/user.utils.js";
-import { resetPasswordEmailTemplate } from "../utils/email.template.js";
+import bcrypt from "bcryptjs";
+import { DEFAULT_PASSWD, EMAIL, FRONT_URL, HOST_URL, JWT_SECRET } from "../config/env.js";
 import transporter from "../config/nodemailer.js";
+import {
+  resetPasswordEmailTemplate,
+  welcomeEmailTemplate,
+} from "../utils/email.template.js";
+import { valideEmail } from "../middlewares/email.middleware.js";
+import {
+  generateToken,
+  getUserWithoutPassword,
+  strongPasswd,
+} from "../utils/user.utils.js";
+
+export const register = async (req, res, next) => {
+  try {
+    const { nomComplet, email, password, role } = req.body;
+    const avatar = req.file ? req.file.path : null;
+
+    if (!email || !password || !nomComplet) {
+      return res
+        .status(400)
+        .json({ message: "Vous devez renseigner tout les champs!" });
+    }
+
+    if (!valideEmail(email)) {
+      return res
+        .status(401)
+        .json({ message: "Entrez une adresse mail valide" });
+    }
+
+    if (!strongPasswd(password)) {
+      return res.status(401).json({
+        message:
+          "Le mot de passe doit être de 6 caractères au mininum et doit contenir au moins:\n- 1 lettre\n-1 chiffre\n- 1 symbole",
+      });
+    }
+
+    const userExists = await Utilisateur.findOne({ where: { email } });
+    if (userExists) {
+      return res
+        .status(400)
+        .json({ message: "Cet utilisateur a déjà un compte" });
+    }
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = await Utilisateur.create({
+      nomComplet,
+      email,
+      password: hashedPassword,
+      avatar,
+      role
+    });
+    const token = generateToken({ id: newUser, email });
+
+    const mailOptions = {
+      from: EMAIL,
+      to: email,
+      subject: "Bienvenue dans BuringHeart IHS",
+      html: welcomeEmailTemplate(nomComplet, email, FRONT_URL),
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    const userWithoutPassword = getUserWithoutPassword(newUser);
+
+    res.cookie("token", token, { httpOnly: true, secure: true });
+    res.status(201).json({
+      message: "Utilisateur créé avec succès",
+      data: { token, user: userWithoutPassword },
+    });
+  } catch (error) {
+    console.error("Erreur lors de l'inscription :", error);
+    res.status(500).json({ message: "Erreur serveur" });
+    next(error);
+  }
+};
 
 export const login = async (req, res, next) => {
   try {
@@ -38,6 +111,7 @@ export const login = async (req, res, next) => {
       data: { token: loginToken, userInfo: userWithoutPassword },
     });
   } catch (error) {
+    console.error("Erreur lors de la connexion :", error);
     res.status(500).json({ message: "Erreur serveur" });
     next(error);
   }
@@ -65,7 +139,7 @@ export const resetPassword = async (req, res, next) => {
       to: email,
       subject: "Réinitialisation du mot de passe",
       html: resetPasswordEmailTemplate(
-        user.firstName,
+        user.nomComplet,
         email,
         HOST_URL,
         resetToken
@@ -115,7 +189,7 @@ export const updatePassword = async (req, res, next) => {
 
     await Utilisateur.update(
       { password: hashedPassword },
-      { where: { idUtilisateur: user.idUtilisateur } }
+      { where: { idUser: user.idUser } }
     );
 
     res.status(200).json({
@@ -123,6 +197,10 @@ export const updatePassword = async (req, res, next) => {
         "Mot de passe réinitialisé avec succès! Connectez-vous maintenant",
     });
   } catch (error) {
+    console.error(
+      "Erreur lors de la réinitialisation du mot de passe :",
+      error
+    );
     res
       .status(500)
       .json({ message: "Erreur lors de la réinitialisation du mot de passe" });

@@ -8,6 +8,7 @@ import db from "./database/db.js";
 import { syncModels } from "./models/index.model.js";
 import errorMiddleware, { errorLogs } from "./middlewares/error.middleware.js";
 import { setupSwagger } from "./swagger.js";
+import authRouter from './routes/auth.route.js';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://127.0.0.1:3000",
+      "http://127.0.0.1:54612",
       "https://burningheartihs.com",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
@@ -36,6 +38,8 @@ app.get("/", (req, res) => {
     message: `Checking BurningHeart API\n=> Passed successfully at ${new Date()}`,
   });
 });
+
+app.use("/api/auth", authRouter);
 
 app.get("/error", errorLogs);
 app.use(errorMiddleware);

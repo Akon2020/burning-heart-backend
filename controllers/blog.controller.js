@@ -1,5 +1,9 @@
-import { Blog, Utilisateur, Categorie, Commentaire } from "../models/index.model.js";
-// import { Op } from "sequelize";
+import {
+  Blog,
+  Utilisateur,
+  Categorie,
+  Commentaire,
+} from "../models/index.model.js";
 
 export const getAllBlogs = async (req, res, next) => {
   try {
@@ -13,9 +17,9 @@ export const getAllBlogs = async (req, res, next) => {
     const blogs = await Blog.findAndCountAll({
       where: whereClause,
       include: [
-        { model: Utilisateur, as: "auteur", attributes: ["nomComplet", "email", "avatar"] },
-        { model: Categorie, as: "categorie" },
-        { model: Commentaire, as: "commentaires" },
+        { model: Utilisateur },
+        { model: Categorie },
+        { model: Commentaire },
       ],
       order: [["dateCreation", "DESC"]],
       limit: parseInt(limit),
@@ -34,19 +38,23 @@ export const getAllBlogs = async (req, res, next) => {
   }
 };
 
-export const getBlogById = async (req, res, next) => {
+export const getSingleBlog = async (req, res, next) => {
   try {
     const { id } = req.params;
     const blog = await Blog.findByPk(id, {
       include: [
-        { model: Utilisateur, as: "auteur", attributes: ["nomComplet", "email", "avatar"] },
+        {
+          model: Utilisateur,
+          as: "auteur",
+          attributes: ["nomComplet", "email", "avatar"],
+        },
         { model: Categorie, as: "categorie" },
-        { 
-          model: Commentaire, 
+        {
+          model: Commentaire,
           as: "commentaires",
           where: { statut: "approuve" },
           required: false,
-          order: [["dateCommentaire", "DESC"]]
+          order: [["dateCommentaire", "DESC"]],
         },
       ],
     });
