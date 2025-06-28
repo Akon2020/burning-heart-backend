@@ -14,7 +14,7 @@ export const welcomeEmailTemplate = (nom, email, url) => {
     <p style="color: #555555">L'équipe de <a href="${url}" style="color: #a42223; text-decoration: none">Evoludia</a></p>
     <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0" />
     <p style="color: #999999">Ce message a été envoyé automatiquement suite à la création de votre compte. Merci de ne pas y répondre.</p>
-    <p style="color: #999999; text-align: center;">&copy; ${currentYear} Evoludia – Tous droits réservés</p>
+    <p style="color: #999999; text-align: center;">&copy; ${currentYear} BurningHeart – Tous droits réservés</p>
     </div>
 </div>
 `;
@@ -42,7 +42,7 @@ export const newUserEmailTemplate = (nom, email, defaultPassword, url) => {
     <p style="color: #555555">L'équipe de <a href="${url}" style="color: #a42223; text-decoration: none">BurningHeart</a></p>
     <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0" />
     <p style="color: #999999">Ce message a été envoyé automatiquement suite à la création de votre compte. Merci de ne pas y répondre.</p>
-    <p style="color: #999999; text-align: center;">&copy; ${currentYear} BurningHear – Tous droits réservés</p>
+    <p style="color: #999999; text-align: center;">&copy; ${currentYear} BurningHeart – Tous droits réservés</p>
     </div>
 </div>`;
 };
@@ -63,7 +63,7 @@ export const resetPasswordEmailTemplate = (nom, email, url, resetToken) => {
     <p style="color: #555555">L'équipe de <a href="${url}" style="color: #a42223; text-decoration: none">BurningHear</a ></p>
     <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0" />
     <p style="color: #999999">Si vous n'avez pas demandé à réinitialiser votre mot de passe, tenez nous informer <a href="mailto:akonkwaushindi@gmail.com" style="color: #a42223; text-decoration: none">en cliquant ici</a ></p>
-    <p style="color: #999999 text-align: center;">&copy; ${currentYear} BurningHear – Tous droits réservés</p>
+    <p style="color: #999999 text-align: center;">&copy; ${currentYear} BurningHeart – Tous droits réservés</p>
   </div>
 </div>
 `;
