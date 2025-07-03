@@ -61,7 +61,7 @@ export const getSingleBlog = async (req, res, next) => {
       ],
     });
 
-    const commentaires = await Commentaire.scope(["approuve"]).findAll({
+    const commentaires = await Commentaire.scope(["approuves"]).findAll({
       where: { idBlog: blog.idBlog },
       order: [["dateCommentaire", "DESC"]],
       include: [
@@ -99,7 +99,7 @@ export const getBlogBySlug = async (req, res, next) => {
         },
         { model: Categorie, as: "categorie" },
         {
-          model: Commentaire.scope("approuve"),
+          model: Commentaire.scope("approuves"),
           as: "commentaires",
           required: false,
         }
@@ -127,13 +127,16 @@ export const createBlog = async (req, res, next) => {
       : "https://placehold.co/600x400?text=Image+Blog";
 
     const idAuteur = req.user?.idUtilisateur;
-    if (!idAuteur || !titre || !slug || !contenu) {
+    if (!idAuteur || !titre || !contenu) {
       return res.status(400).json({ message: "Champs requis manquants." });
     }
 
+    const generatedSlug = slugify(titre, { lower: true, strict: true });
+    const finalSlug = slug || generatedSlug;
+
     const blogExistant = await Blog.findOne({
       where: {
-        [Op.or]: [{ titre }, { slug }],
+        [Op.or]: [{ titre }, { slug: finalSlug }],
       },
     });
 
@@ -151,9 +154,6 @@ export const createBlog = async (req, res, next) => {
     if (statut && !statutValide.includes(statut)) {
       return res.status(400).json({ message: "Statut invalide" });
     }
-
-    const generatedSlug = slugify(titre, { lower: true, strict: true });
-    const finalSlug = slug || generatedSlug;
 
     const nouveauBlog = await Blog.create({
       titre,

@@ -9,6 +9,7 @@ import {
   updateBlog,
   deleteBlog,
 } from "../controllers/blog.controller.js";
+import { authenticationJWT } from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/upload.middleware.js";
 import { normalizeUploadPaths } from "../utils/normalizeUploadPaths.js";
 
@@ -98,7 +99,7 @@ blogRouter.get("/:id", getSingleBlog);
  *       404:
  *         description: Blog non trouvé
  */
-blogRouter.get("/search/slug/:slug", getBlogBySlug);
+blogRouter.get("/slug/:slug", getBlogBySlug);
 
 /**
  * @swagger
@@ -169,14 +170,14 @@ blogRouter.get("/statut/:statut", getBlogsByStatut);
  *                 type: string
  *               idCategorie:
  *                 type: integer
- *               image:
+ *               imageUne:
  *                 type: string
  *                 format: binary
  *     responses:
  *       201:
  *         description: Blog créé avec succès
  */
-blogRouter.post("/add", upload.single("image"), normalizeUploadPaths, createBlog);
+blogRouter.post("/add", authenticationJWT, upload.single("imageUne"), normalizeUploadPaths, createBlog);
 
 /**
  * @swagger
@@ -212,7 +213,7 @@ blogRouter.post("/add", upload.single("image"), normalizeUploadPaths, createBlog
  *                 type: string
  *               idCategorie:
  *                 type: integer
- *               image:
+ *               imageUne:
  *                 type: string
  *                 format: binary
  *     responses:
@@ -221,7 +222,7 @@ blogRouter.post("/add", upload.single("image"), normalizeUploadPaths, createBlog
  *       404:
  *         description: Blog non trouvé
  */
-blogRouter.patch("/update/:id", upload.single("image"), normalizeUploadPaths, updateBlog);
+blogRouter.patch("/update/:id", authenticationJWT, upload.single("imageUne"), normalizeUploadPaths, updateBlog);
 
 /**
  * @swagger
