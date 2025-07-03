@@ -3,6 +3,7 @@ import transporter from "../config/nodemailer.js";
 import { valideEmail } from "../middlewares/email.middleware.js";
 import { Contact } from "../models/index.model.js";
 import { confirmationReceptionEmailTemplate, contactReplyEmailTemplate } from "../utils/email.template.js";
+import { formatDateForUser } from "../utils/user.utils.js";
 
 export const getAllContacts = async (req, res, next) => {
   try {
@@ -81,6 +82,7 @@ export const createContact = async (req, res, next) => {
       subject: "Confirmation de Réception de votre message",
       html: confirmationReceptionEmailTemplate(
         nouveauContact.nomComplet,
+        sujet,
         HOST_URL
       ),
     };
@@ -97,7 +99,7 @@ export const createContact = async (req, res, next) => {
     });
 
     return res.status(201).json({
-      message: `${nouveauContact.nomComplet}, Votre message a été envoyé avec succès\nTrouvez une accussée de reception dans votre boîte mail`,
+      message: `${nouveauContact.nomComplet}, Votre message a été envoyé avec succès\nTrouvez une accusée de reception dans votre boîte mail`,
       data: nouveauContact,
     });
   } catch (error) {
@@ -125,7 +127,7 @@ export const repondreContact = async (req, res, next) => {
       from: EMAIL,
       to: contact.email,
       subject: sujetReponse,
-      html: contactReplyEmailTemplate(contact.nomComplet, sujetReponse, messageReponse),
+      html: contactReplyEmailTemplate(contact.nomComplet, sujetReponse, formatDateForUser(contact.createdAt), contact.sujet, messageReponse),
     };
 
     await transporter.sendMail(mailOptions);

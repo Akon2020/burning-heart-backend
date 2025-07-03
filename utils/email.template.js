@@ -69,7 +69,7 @@ export const resetPasswordEmailTemplate = (nom, email, url, resetToken) => {
 `;
 };
 
-export const confirmationReceptionEmailTemplate = (nom, url) => {
+export const confirmationReceptionEmailTemplate = (nom, sujet, url) => {
   return `
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9f9f9; padding: 40px 1rem;">
     <tr>
@@ -95,7 +95,8 @@ export const confirmationReceptionEmailTemplate = (nom, url) => {
           </tr>
           <tr>
             <td style="color: #555555; font-size: 15px; line-height: 1.5; padding-bottom: 16px;">
-              Nous vous confirmons que nous avons bien reçu votre message. Notre équipe l'examinera avec attention et vous répondra dans les plus brefs délais si nécessaire.
+              Nous vous confirmons que nous avons bien reçu votre message ayant comme sujet <strong>${sujet}</strong>.
+              Notre équipe l'examinera avec attention et vous répondra dans les plus brefs délais si nécessaire.
             </td>
           </tr>
           <tr>
@@ -153,7 +154,7 @@ export const confirmationReceptionEmailTemplate = (nom, url) => {
   `;
 };
 
-export const contactReplyEmailTemplate = (nom, sujet, contenuHtml) => {
+export const contactReplyEmailTemplate = (nom, sujet, date, sujetResponse, contenuHtml) => {
   return `
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f4f4f4; padding: 40px 1rem;">
     <tr>
@@ -175,6 +176,12 @@ export const contactReplyEmailTemplate = (nom, sujet, contenuHtml) => {
           <tr>
             <td style="color: #333333; font-size: 16px; padding-bottom: 16px;">
               Bonjour ${nom},
+            </td>
+          </tr>
+          
+          <tr>
+            <td style="color: #333333; font-size: 16px; padding-bottom: 16px;">
+              Par rapport à votre message du ${date} ayant comme sujet <strong>${sujetResponse}</strong>,
             </td>
           </tr>
 

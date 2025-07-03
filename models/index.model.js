@@ -19,8 +19,8 @@ Blog.belongsTo(Categorie, { foreignKey: "idCategorie", as: "categorie" });
 Categorie.hasMany(Blog, { foreignKey: "idCategorie", as: "blogs" });
 
 // Commentaire-Blog associations
-Commentaire.belongsTo(Blog, { foreignKey: "idBlog", as: "blog" });
-Blog.hasMany(Commentaire, { foreignKey: "idBlog", as: "commentaires" });
+Commentaire.belongsTo(Blog, { foreignKey: "idBlog", as: "blog", onDelete: "CASCADE", hooks: true });
+Blog.hasMany(Commentaire, { foreignKey: "idBlog", as: "commentaires", onDelete: "CASCADE", hooks: true });
 
 // Commentaire-Utilisateur associations (pour les utilisateurs connectés)
 Commentaire.belongsTo(Utilisateur, { foreignKey: "idUtilisateur", as: "utilisateur" });

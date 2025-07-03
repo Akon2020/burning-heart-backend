@@ -28,3 +28,12 @@ export const strongPasswd = (passwd) => {
 
   return contientLettre && contientChiffre && contientSpecial;
 };
+
+export const formatDateForUser = (isoDateString) => {
+  const date = new Date(isoDateString);
+
+  return new Intl.DateTimeFormat('fr-FR', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+  }).format(date);
+};
