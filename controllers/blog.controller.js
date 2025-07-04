@@ -102,7 +102,7 @@ export const getBlogBySlug = async (req, res, next) => {
           model: Commentaire.scope("approuves"),
           as: "commentaires",
           required: false,
-        }
+        },
       ],
     });
 
@@ -148,7 +148,9 @@ export const createBlog = async (req, res, next) => {
 
     const categorieExistante = await Categorie.findByPk(idCategorie);
     if (!categorieExistante) {
-      return res.status(400).json({ message: "Catégorie invalide ou inexistante" });
+      return res
+        .status(400)
+        .json({ message: "Catégorie invalide ou inexistante" });
     }
 
     if (statut && !statutValide.includes(statut)) {
@@ -210,6 +212,17 @@ export const updateBlog = async (req, res, next) => {
         donneesAMettreAJour[champ] = req.body[champ];
       }
     });
+
+    if (req.file) {
+      donneesAMettreAJour.imageUne = req.file.path;
+    }
+
+    if (donneesAMettreAJour.titre && !donneesAMettreAJour.slug) {
+      donneesAMettreAJour.slug = slugify(donneesAMettreAJour.titre, {
+        lower: true,
+        strict: true,
+      });
+    }
 
     const blog = await Blog.findByPk(id);
     if (!blog) {

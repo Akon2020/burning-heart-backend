@@ -54,7 +54,7 @@ const Commentaire = db.define(
       validate: {
         isUrl: true,
       },
-      comment: "Site web de la personne (optionnel)",
+      comment: "Site web de la personne ou de l'entreprise (optionnel)",
     },
     contenu: {
       type: DataTypes.TEXT,

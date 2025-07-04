@@ -10,6 +10,7 @@ import errorMiddleware, { errorLogs } from "./middlewares/error.middleware.js";
 import { setupSwagger } from "./swagger.js";
 import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/utilisateur.route.js";
+import equipeRouter from "./routes/equipe.route.js";
 import contactRouter from "./routes/contact.route.js";
 import categorieRouter from "./routes/categorie.route.js";
 import blogRouter from "./routes/blog.route.js";
@@ -45,6 +46,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/equipes", equipeRouter);
 app.use("/api/contacts", contactRouter);
 app.use("/api/categories", categorieRouter);
 app.use("/api/blogs", blogRouter);

@@ -1,5 +1,5 @@
 import slugify from "slugify";
-import Categorie from "../models/categorie.model.js";
+import { Categorie } from "../models/index.model.js";
 
 export const getAllCategories = async (req, res, next) => {
   try {
@@ -81,7 +81,7 @@ export const createCategorie = async (req, res, next) => {
 export const updateCategorie = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { nomCategorie, slug } = req.body;
+    const { nomCategorie } = req.body;
 
     const categorie = await Categorie.findByPk(id);
 
