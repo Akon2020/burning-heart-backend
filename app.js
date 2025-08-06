@@ -14,6 +14,9 @@ import equipeRouter from "./routes/equipe.route.js";
 import contactRouter from "./routes/contact.route.js";
 import categorieRouter from "./routes/categorie.route.js";
 import blogRouter from "./routes/blog.route.js";
+import commentaireRouter from "./routes/commentaire.route.js";
+import evenementRouter from "./routes/evenement.route.js";
+import abonneRouter from "./routes/abonne.route.js";
 
 const app = express();
 
@@ -50,6 +53,9 @@ app.use("/api/equipes", equipeRouter);
 app.use("/api/contacts", contactRouter);
 app.use("/api/categories", categorieRouter);
 app.use("/api/blogs", blogRouter);
+app.use("/api/commentaires", commentaireRouter);
+app.use("/api/evenements", evenementRouter);
+app.use("/api/abonnes", abonneRouter);
 
 app.get("/error", errorLogs);
 app.use(errorMiddleware);

@@ -19,20 +19,48 @@ Blog.belongsTo(Categorie, { foreignKey: "idCategorie", as: "categorie" });
 Categorie.hasMany(Blog, { foreignKey: "idCategorie", as: "blogs" });
 
 // Commentaire-Blog associations
-Commentaire.belongsTo(Blog, { foreignKey: "idBlog", as: "blog", onDelete: "CASCADE", hooks: true });
-Blog.hasMany(Commentaire, { foreignKey: "idBlog", as: "commentaires", onDelete: "CASCADE", hooks: true });
+Commentaire.belongsTo(Blog, {
+  foreignKey: "idBlog",
+  as: "blog",
+  onDelete: "CASCADE",
+  hooks: true,
+});
+Blog.hasMany(Commentaire, {
+  foreignKey: "idBlog",
+  as: "commentaires",
+  onDelete: "CASCADE",
+  hooks: true,
+});
 
 // Commentaire-Utilisateur associations (pour les utilisateurs connectés)
-Commentaire.belongsTo(Utilisateur, { foreignKey: "idUtilisateur", as: "utilisateur" });
-Utilisateur.hasMany(Commentaire, { foreignKey: "idUtilisateur", as: "commentaires" });
+Commentaire.belongsTo(Utilisateur, {
+  foreignKey: "idUtilisateur",
+  as: "utilisateur",
+});
+Utilisateur.hasMany(Commentaire, {
+  foreignKey: "idUtilisateur",
+  as: "commentaires",
+});
 
 // Commentaire-Commentaire associations (pour les réponses)
-Commentaire.belongsTo(Commentaire, { foreignKey: "idCommentaireParent", as: "commentaireParent" });
-Commentaire.hasMany(Commentaire, { foreignKey: "idCommentaireParent", as: "reponses" });
+Commentaire.belongsTo(Commentaire, {
+  foreignKey: "idCommentaireParent",
+  as: "commentaireParent",
+});
+Commentaire.hasMany(Commentaire, {
+  foreignKey: "idCommentaireParent",
+  as: "reponses",
+});
 
 // Modération des commentaires
-Commentaire.belongsTo(Utilisateur, { foreignKey: "modereBy", as: "moderateur" });
-Utilisateur.hasMany(Commentaire, { foreignKey: "modereBy", as: "commentairesModeres" });
+Commentaire.belongsTo(Utilisateur, {
+  foreignKey: "modereBy",
+  as: "moderateur",
+});
+Utilisateur.hasMany(Commentaire, {
+  foreignKey: "modereBy",
+  as: "commentairesModeres",
+});
 
 // Newsletter associations
 Newsletter.belongsTo(Utilisateur, { foreignKey: "writedBy", as: "redacteur" });

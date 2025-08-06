@@ -1,4 +1,4 @@
-import { EMAIL, HOST_URL } from "../config/env.js";
+import { EMAIL, FRONT_URL } from "../config/env.js";
 import transporter from "../config/nodemailer.js";
 import { valideEmail } from "../middlewares/email.middleware.js";
 import { Contact } from "../models/index.model.js";
@@ -83,7 +83,7 @@ export const createContact = async (req, res, next) => {
       html: confirmationReceptionEmailTemplate(
         nouveauContact.nomComplet,
         sujet,
-        HOST_URL
+        FRONT_URL
       ),
     };
 
