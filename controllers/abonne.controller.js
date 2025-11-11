@@ -27,7 +27,7 @@ export const subscribeNewsletter = async (req, res, next) => {
     });
 
     const mailOptions = {
-      from: EMAIL,
+      from: `"BurningHeart IHS" <${EMAIL}>`,
       to: email,
       subject: "Confirmation d'abonnement à la newsletter",
       html: newsletterSubscriptionConfirmationTemplate (

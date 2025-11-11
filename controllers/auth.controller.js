@@ -57,7 +57,7 @@ export const register = async (req, res, next) => {
     const token = generateToken({ id: newUser, email });
 
     const mailOptions = {
-      from: EMAIL,
+      from: `"BurningHeart IHS" <${EMAIL}>`,
       to: email,
       subject: "Bienvenue dans BuringHeart IHS",
       html: welcomeEmailTemplate(nomComplet, email, FRONT_URL),
@@ -139,7 +139,7 @@ export const resetPassword = async (req, res, next) => {
     }
     const resetToken = generateToken(user);
     const mailOptions = {
-      from: EMAIL,
+      from: `"BurningHeart IHS" <${EMAIL}>`,
       to: email,
       subject: "Réinitialisation du mot de passe",
       html: resetPasswordEmailTemplate(

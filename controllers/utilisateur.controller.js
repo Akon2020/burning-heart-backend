@@ -99,7 +99,7 @@ export const createUtilisateur = async (req, res, next) => {
     let mailEnvoye = true;
     try{
       const mailOptions = {
-        from: EMAIL,
+        from: `"BurningHeart IHS" <${EMAIL}>`,
         to: email,
         subject: "Bienvenue dans BurningHeart",
         html: newUserEmailTemplate(nomComplet, email, DEFAULT_PASSWD, FRONT_URL),

@@ -2,23 +2,68 @@ const currentYear = new Date().getFullYear();
 
 export const welcomeEmailTemplate = (nom, email, url) => {
   return `
-<div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
-  <div style=" max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <h2 style="color: #333333">Bienvenue ${nom} 👋!</h2>
-    <p style="color: #555555">Votre compte a été créé avec succès pour l'adresse email</p> <strong style="text-align: center; text-decoration: none; color: #a42223">${email}</strong>
-    <p style="color: #555555">Vous disposez maintenant d'un compte sur notre plateforme, cependant vous n'avez pas encore accès au système de gestion.</p>
-    <p style="color: #555555">Pour obtenir les accès nécessaires, veuillez contacter l'administrateur du système qui vous attribuera les permissions appropriées.</p>
-    <p style="color: #555555">Vous pouvez contacter l'administrateur à l'adresse suivante</p>
-    <a href="mailto:burningheartihs@gmail.com" style="background-color: #a42223; color: #fff; padding: 10px; border-radius: 5px; text-decoration: none">burningheartihs@gmail.com</a>
-    <p style="color: #555555">A très bientôt 😇,</p>
-    <p style="color: #555555">L'équipe de <a href="${url}" style="color: #a42223; text-decoration: none">BurningHeart</a></p>
-    <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0" />
-    <p style="color: #999999">Ce message a été envoyé automatiquement suite à la création de votre compte. Merci de ne pas y répondre.</p>
-    <p style="color: #999999; text-align: center;">&copy; ${currentYear} BurningHeart – Tous droits réservés</p>
+  <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+      <!-- Logo Centré en Haut -->
+      <div style="text-align: center; margin-bottom: 20px;">
+        <img src="https://burningheart.netlify.app/img/NavLogo.png" 
+             alt="BurningHeart Logo" 
+             style="max-width: 120px; height: auto;" />
+      </div>
+
+      <h2 style="color: #333333; text-align: center; margin-top: 0;">Bienvenue ${nom} 👋!</h2>
+
+      <p style="color: #555555; line-height: 1.5;">
+        Votre compte a été créé avec succès pour l'adresse email :
+      </p>
+
+      <p style="text-align: center; font-size: 16px; font-weight: bold; color: #a42223; margin: 8px 0;">
+        ${email}
+      </p>
+
+      <p style="color: #555555; line-height: 1.5;">
+        Vous disposez maintenant d'un compte sur notre plateforme, cependant vous n'avez pas encore accès au système de gestion.
+      </p>
+
+      <p style="color: #555555; line-height: 1.5;">
+        Pour obtenir les accès nécessaires, veuillez contacter l'administrateur qui vous attribuera les permissions appropriées.
+      </p>
+
+      <p style="color: #555555; line-height: 1.5;">
+        Vous pouvez contacter l'administrateur à l'adresse suivante :
+      </p>
+
+      <div style="text-align: center; margin: 15px 0;">
+        <a href="mailto:burningheartihs@gmail.com" 
+           style="background-color: #a42223; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          burningheartihs@gmail.com
+        </a>
+      </div>
+
+      <p style="color: #555555; line-height: 1.5;">
+        À très bientôt 😇,
+      </p>
+
+      <p style="color: #555555; line-height: 1.5;">
+        L'équipe de <a href="${url}" style="color: #a42223; text-decoration: none; font-weight: bold;">BurningHeart</a>
+      </p>
+
+      <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0;" />
+
+      <p style="color: #999999; font-size: 12px; line-height: 1.5;">
+        Ce message a été envoyé automatiquement suite à la création de votre compte. Merci de ne pas y répondre.
+      </p>
+
+      <p style="color: #999999; font-size: 12px; text-align: center;">
+        &copy; ${currentYear} BurningHeart – Tous droits réservés
+      </p>
+
     </div>
-</div>
-`;
+  </div>
+  `;
 };
+
 
 export const newUserEmailTemplate = (nom, email, defaultPassword, url) => {
   return `<div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
@@ -394,6 +439,112 @@ export const newsletterSubscriptionConfirmationTemplate = (nom, url) => {
               &copy; ${currentYear} – Tous droits réservés
             </td>
           </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  `;
+};
+
+export const eventPublishedNotificationTemplate = (nom, nomEvenement, dateEvenement, lieuEvenement, url) => {
+  return `
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9f9f9; padding: 40px 1rem;">
+    <tr>
+      <td align="center">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" 
+          style="max-width: 600px; background-color: #ffffff; padding: 24px; border-radius: 8px; 
+          box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-family: Arial, sans-serif;">
+          
+          <!-- Logo -->
+          <tr>
+            <td align="center" style="padding-bottom: 20px;">
+              <img src="https://burningheart.netlify.app/img/NavLogo.png" alt="Logo" 
+                style="max-width: 100%; width: auto; height: 5rem;">
+            </td>
+          </tr>
+
+          <!-- Title -->
+          <tr>
+            <td align="center" style="color: #a42223; font-size: 24px; font-weight: bold; padding-bottom: 16px;">
+              Nouvel Événement Publié !
+            </td>
+          </tr>
+
+          <!-- Greeting -->
+          <tr>
+            <td style="color: #333333; font-size: 16px; padding-bottom: 16px;">
+              Bonjour ${nom || "cher abonné"},
+            </td>
+          </tr>
+
+          <!-- Description -->
+          <tr>
+            <td style="color: #555555; font-size: 15px; line-height: 1.5; padding-bottom: 16px;">
+              Nous avons le plaisir de vous annoncer qu'un nouvel événement vient d’être publié !
+              Ne manquez pas cette opportunité d’y participer.
+            </td>
+          </tr>
+
+          <!-- Event Details -->
+          <tr>
+            <td style="color: #555555; font-size: 15px; padding-bottom: 24px;">
+              <strong>${nomEvenement}</strong><br><br>
+              📅 <strong>Date :</strong> ${dateEvenement}<br>
+              📍 <strong>Lieu :</strong> ${lieuEvenement}
+            </td>
+          </tr>
+
+          <!-- CTA Button -->
+          <tr>
+            <td align="center" style="padding: 20px 0;">
+              <a href="${url}" 
+                style="background-color: #a42223; color: #ffffff; text-decoration: none; 
+                padding: 12px 24px; border-radius: 6px; font-weight: bold; display: inline-block;">
+                Découvrir l'événement
+              </a>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="color: #555555; font-size: 15px; padding-bottom: 4px;">
+              À très bientôt,
+            </td>
+          </tr>
+          <tr>
+            <td style="color: #555555; font-size: 15px; padding-bottom: 16px;">
+              L'équipe BurningHeart
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0;" />
+            </td>
+          </tr>
+
+          <!-- Social Icons -->
+          <tr>
+            <td align="center" style="padding: 10px 0;">
+              <a href="https://facebook.com/burningheart87" style="margin: 0 8px;">
+                <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" style="vertical-align: middle;">
+              </a>
+              <a href="https://instagram.com/burningheart87" style="margin: 0 8px;">
+                <img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="Instagram" style="vertical-align: middle;">
+              </a>
+              <a href="https://youtube.com/@burningheart-bhis" style="margin: 0 8px;">
+                <img src="https://cdn-icons-png.flaticon.com/24/1384/1384060.png" alt="YouTube" style="vertical-align: middle;">
+              </a>
+            </td>
+          </tr>
+
+          <!-- Copyright -->
+          <tr>
+            <td align="center" style="color: #999999; font-size: 12px; padding-top: 20px;">
+              &copy; ${currentYear} – Tous droits réservés
+            </td>
+          </tr>
+
         </table>
       </td>
     </tr>

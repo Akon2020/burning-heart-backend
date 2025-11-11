@@ -4,7 +4,6 @@ import cors from "cors";
 import path from "path";
 import logger from "morgan";
 import { PORT, HOST_URL } from "./config/env.js";
-import db from "./database/db.js";
 import { syncModels } from "./models/index.model.js";
 import errorMiddleware, { errorLogs } from "./middlewares/error.middleware.js";
 import { setupSwagger } from "./swagger.js";
@@ -32,7 +31,7 @@ app.use(
       "http://localhost:3000",
       "http://127.0.0.1:3000",
       "http://127.0.0.1:58248",
-      "https://burningheartihs.com",
+      "https://burningheartihs.org",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,

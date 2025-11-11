@@ -1,4 +1,4 @@
-import { EMAIL, FRONT_URL } from "../config/env.js";
+import { EMAIL, FRONT_URL, CONTACT_EMAIL } from "../config/env.js";
 import transporter from "../config/nodemailer.js";
 import { valideEmail } from "../middlewares/email.middleware.js";
 import { Contact } from "../models/index.model.js";
@@ -77,7 +77,7 @@ export const createContact = async (req, res, next) => {
     });
 
     const mailOptions = {
-      from: EMAIL,
+      from: `"BurningHeart IHS" <${EMAIL}>`,
       to: email,
       subject: "Confirmation de Réception de votre message",
       html: confirmationReceptionEmailTemplate(
@@ -124,7 +124,7 @@ export const repondreContact = async (req, res, next) => {
     }
 
     const mailOptions = {
-      from: EMAIL,
+      from: `"BurningHeart IHS" <${CONTACT_EMAIL}>`,
       to: contact.email,
       subject: sujetReponse,
       html: contactReplyEmailTemplate(contact.nomComplet, sujetReponse, formatDateForUser(contact.createdAt), contact.sujet, messageReponse),
