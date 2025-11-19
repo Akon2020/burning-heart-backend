@@ -1,7 +1,13 @@
 import { Utilisateur } from "../models/index.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { DEFAULT_PASSWD, EMAIL, FRONT_URL, HOST_URL, JWT_SECRET } from "../config/env.js";
+import {
+  DEFAULT_PASSWD,
+  EMAIL,
+  FRONT_URL,
+  HOST_URL,
+  JWT_SECRET,
+} from "../config/env.js";
 import transporter from "../config/nodemailer.js";
 import {
   resetPasswordEmailTemplate,
@@ -52,7 +58,7 @@ export const register = async (req, res, next) => {
       email,
       password: hashedPassword,
       avatar,
-      role
+      role,
     });
     const token = generateToken({ id: newUser, email });
 
@@ -67,7 +73,11 @@ export const register = async (req, res, next) => {
 
     const userWithoutPassword = getUserWithoutPassword(newUser);
 
-    res.cookie("token", token, { httpOnly: true, secure: true });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+    });
+
     res.status(201).json({
       message: "Utilisateur créé avec succès",
       data: { token, user: userWithoutPassword },
@@ -104,9 +114,12 @@ export const login = async (req, res, next) => {
 
     user.derniereConnexion = new Date();
     await user.save();
-    
+
     const loginToken = generateToken(user);
-    res.cookie("token", loginToken, { httpOnly: true, secure: true });
+    res.cookie("token", loginToken, {
+      httpOnly: true,
+      secure: true,
+    });
 
     const userWithoutPassword = getUserWithoutPassword(user);
 

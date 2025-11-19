@@ -253,6 +253,7 @@ export const createEvent = async (req, res, next) => {
     }
 
     res.status(201).json({
+      mailSend: "La notification a été envoyé aux abonnées",
       message: `L'événement “${newEvent.titre}” a été créé avec succès.`,
       data: newEvent,
     });

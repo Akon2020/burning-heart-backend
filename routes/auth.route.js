@@ -46,7 +46,7 @@ authRouter.get("/status", authenticationJWT, checkAuthStatus);
  *         description: Non authentifié
  */
 authRouter.get("/profile", authenticationJWT, (req, res) => {
-  res.json({ user: req.user });
+  res.json({ user: req.user, authenticated: true });
 });
 
 /**
